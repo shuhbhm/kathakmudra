@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { STREAM_CONFIG } from "./config";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import StreamPanel from "./components/StreamPanel";
@@ -10,10 +11,10 @@ export default function App() {
   const [selectedImage, setSelectedImage] = useState(null);
 
   function onNewFrame(frame, confidence) {
-    if (confidence < 0.95) return;
+    if (confidence < STREAM_CONFIG.CONF_THRESHOLD) return;
 
     setGallery((prev) => {
-      if (prev.length >= 15) return prev;
+      if (prev.length >= STREAM_CONFIG.MAX_GALLERY_FRAMES) return prev;
       return [frame, ...prev];
     });
   }
