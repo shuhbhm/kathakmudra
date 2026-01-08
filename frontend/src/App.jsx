@@ -1,31 +1,21 @@
 import { useState } from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import WebcamPanel from "./components/WebcamPanel";
-import InfoPanel from "./components/InfoPanel";
+import StreamPanel from "./components/StreamPanel";
 import AlbumStrip from "./components/AlbumStrip";
 import ImageModal from "./components/ImageModal";
-import { inferBatch } from "./api";
 
 export default function App() {
-  const [stream, setStream] = useState(null);
   const [gallery, setGallery] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
-  const [loading, setLoading] = useState(false);
 
-  async function handleBurstCapture(frames) {
-    try {
-      setLoading(true);
-      const result = await inferBatch(frames);
-      const images = result.frames.map(
-        (b64) => `data:image/jpeg;base64,${b64}`
-      );
-      setGallery(images);
-    } catch {
-      alert("Inference failed");
-    } finally {
-      setLoading(false);
-    }
+  function onNewFrame(frame, confidence) {
+    if (confidence < 0.95) return;
+
+    setGallery((prev) => {
+      if (prev.length >= 15) return prev;
+      return [frame, ...prev];
+    });
   }
 
   return (
@@ -33,14 +23,8 @@ export default function App() {
       <Header />
 
       <div className="content">
-        <div className="top-panels">
-          <WebcamPanel stream={stream} />
-          <InfoPanel
-            stream={stream}
-            setStream={setStream}
-            onBurstCapture={handleBurstCapture}
-            loading={loading}
-          />
+        <div className="stream-wrapper">
+          <StreamPanel onAnnotatedFrame={onNewFrame} />
         </div>
 
         {gallery.length > 0 && (
