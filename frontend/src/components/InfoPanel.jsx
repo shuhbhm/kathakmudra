@@ -36,7 +36,7 @@ export default function InfoPanel({ stream, setStream, onBurstCapture, loading }
 
   return (
     <div className="info-panel">
-      <h2>Kathak Mudra Detection</h2>
+      <h2>Detection</h2>
       <p>
         This system performs real-time mudra recognition using a custom YOLO
         model. Start the camera and capture a burst to analyze gestures.
