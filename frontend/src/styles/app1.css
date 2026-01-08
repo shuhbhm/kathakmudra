@@ -8,37 +8,14 @@
   box-sizing: border-box;
 }
 
-/* =======================
-   BASE BODY (SINGLE SOURCE)
-   ======================= */
 body {
   margin: 0;
   height: 100vh;
-  overflow: hidden;
+  overflow: hidden; 
   font-family: system-ui, sans-serif;
-  background: black; /* JS will override after video */
-  
-}
+  background: url("/naach.png") center / cover fixed;
+} 
 
-/* =======================
-   BACKGROUND VIDEO
-   ======================= */
-#bg-video {
-  position: fixed;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: -1;
-  pointer-events: none;
-}
-
-
-
-
-/* =======================
-   APP ROOT
-   ======================= */
 .app {
   height: 100vh;
   display: flex;
@@ -47,9 +24,7 @@ body {
   color: white;
 }
 
-/* =======================
-   HEADER
-   ======================= */
+/* HEADER */
 .header {
   height: var(--header-h);
   display: flex;
@@ -59,21 +34,18 @@ body {
   background: rgba(0, 0, 0, 0.5);
 }
 
-/* =======================
-   FOOTER
-   ======================= */
+/* FOOTER */
 .footer {
   height: var(--footer-h);
   display: flex;
   align-items: center;
+  text-align: center;
   justify-content: center;
   background: rgba(0, 0, 0, 0.5);
   font-size: 14px;
 }
 
-/* =======================
-   MAIN CONTENT
-   ======================= */
+/* CONTENT */
 .content {
   height: calc(100vh - var(--header-h) - var(--footer-h));
   display: flex;
@@ -82,19 +54,15 @@ body {
   padding: 12px;
 }
 
-/* =======================
-   STREAM + CONTROLS
-   ======================= */
+/* STREAM + CONTROLS */
 .stream-wrapper {
   flex: 1;
   display: flex;
   gap: 16px;
-  min-height: 0; /* IMPORTANT — DO NOT REMOVE */
+  min-height: 0; /* VERY IMPORTANT */
 }
 
-/* =======================
-   STREAM PANEL
-   ======================= */
+/* STREAM PANEL */
 .stream-panel {
   position: relative;
   flex: 3;
@@ -111,27 +79,7 @@ body {
   object-fit: cover;
 }
 
-/* =======================
-   CAMERA OFF OVERLAY
-   ======================= */
-.camera-off-overlay {
-  position: absolute;
-  inset: 0;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  font-size: 22px;
-  font-weight: 600;
-  letter-spacing: 1px;
-
-  pointer-events: none; /* VERY IMPORTANT */
-}
-
-/* =======================
-   CONTROL PANEL
-   ======================= */
+/* CONTROL PANEL */
 .control-panel {
   flex: 1;
   background: rgba(0, 0, 0, 0.5);
@@ -142,9 +90,7 @@ body {
   justify-content: space-between;
 }
 
-/* =======================
-   BUTTONS (UNCHANGED)
-   ======================= */
+/* BUTTONS */
 button {
   padding: 12px;
   border-radius: 8px;
@@ -152,9 +98,7 @@ button {
   cursor: pointer;
 }
 
-/* =======================
-   ALBUM STRIP
-   ======================= */
+/* ALBUM STRIP */
 .album-strip {
   height: var(--album-h);
   flex-shrink: 0;
@@ -176,10 +120,7 @@ button {
 .album-strip img:hover {
   transform: scale(1.08);
 }
-
-/* =======================
-   FULLSCREEN IMAGE MODAL
-   ======================= */
+/* FULLSCREEN IMAGE MODAL */
 .image-modal {
   position: fixed;
   inset: 0;
@@ -198,4 +139,23 @@ button {
   object-fit: contain;
   border-radius: 12px;
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+}
+
+/* CAMERA OFF OVERLAY */
+.camera-off-overlay {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 1px;
+
+  /* color: rgba(255, 255, 255, 0.85);
+  background: rgba(0, 0, 0, 0.35); */
+
+  pointer-events: none; /* IMPORTANT */
 }
