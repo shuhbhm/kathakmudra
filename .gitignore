@@ -1,0 +1,61 @@
+############################
+# OS / Editor junk
+############################
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.vscode/
+.idea/
+
+############################
+# Python (Backend)
+############################
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.log
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# Python build artifacts
+build/
+dist/
+*.egg-info/
+
+############################
+# Node / Frontend
+############################
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Vite / frontend build output
+dist/
+.cache/
+
+############################
+# Environment variables / secrets
+############################
+.env
+.env.*
+*.key
+*.pem
+
+############################
+# Test / coverage
+############################
+coverage/
+.pytest_cache/
+
+############################
+# Temporary / runtime files
+############################
+*.tmp
+*.temp
