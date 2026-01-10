@@ -1,7 +1,10 @@
-from fastapi import FastAPI
+# server.py
+from fastapi import FastAPI, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
-from aiortc import RTCPeerConnection, RTCSessionDescription
-from yolo_track import AnnotatedVideoTrack
+import cv2
+import numpy as np
+import base64
+from ultralytics import YOLO
 
 app = FastAPI()
 
@@ -12,29 +15,28 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-pcs = set()
+model = YOLO("phase1.pt")
+model.to("cuda:0")
 
-@app.post("/offer")
-async def offer(offer: dict):
-    pc = RTCPeerConnection()
-    pcs.add(pc)
 
-    @pc.on("track")
-    def on_track(track):
-        if track.kind == "video":
-            pc.addTrack(AnnotatedVideoTrack(track))
+@app.get("/")
+def health():
+    return {"status": "ok"}
 
-    await pc.setRemoteDescription(
-        RTCSessionDescription(
-            sdp=offer["sdp"],
-            type=offer["type"]
-        )
-    )
+@app.post("/infer_frame")
+async def infer_frame(file: UploadFile = File(...)):
+    image_bytes = await file.read()
 
-    answer = await pc.createAnswer()
-    await pc.setLocalDescription(answer)
+    np_img = np.frombuffer(image_bytes, np.uint8)
+    frame = cv2.imdecode(np_img, cv2.IMREAD_COLOR)
+
+    results = model(frame, conf=0.5, verbose=False)
+    annotated = results[0].plot()
+
+    _, buffer = cv2.imencode(".jpg", annotated)
+    encoded = base64.b64encode(buffer).decode("utf-8")
 
     return {
-        "sdp": pc.localDescription.sdp,
-        "type": pc.localDescription.type
+        "frame": encoded,
+        "max_conf": float(results[0].boxes.conf.max()) if results[0].boxes else 0.0
     }

@@ -43,6 +43,7 @@ export default function StreamPanel({ onAnnotatedFrame }) {
     const formData = new FormData();
     formData.append("file", blob, "frame.jpg");
 
+
     const res = await fetch(`${BACKEND_URL}/infer_frame`, {
       method: "POST",
       body: formData,
