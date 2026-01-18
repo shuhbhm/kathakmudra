@@ -1,4 +1,4 @@
-const BACKEND_URL = "https://ayereldu0sm0l6-8000.proxy.runpod.net/";
+const BACKEND_URL = "https://q4gqphuvj4xc7m-8000.proxy.runpod.net/:8000";
 
 export async function inferBatch(frames) {
   const formData = new FormData();
